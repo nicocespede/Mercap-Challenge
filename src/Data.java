@@ -54,10 +54,10 @@ public class Data {
 			this.calls.add(new Call(user1, user5, LocalDateTime.of(2021, Month.AUGUST, 28, 8, 0, 55),
 					LocalDateTime.of(2021, Month.AUGUST, 28, 8, 50, 55)));
 
-			// llamada local de media hora un dia habil (lunes) fuera de las 8 y las 20 = $6
+			// llamada local de 40 minutos un dia habil (lunes) fuera de las 8 y las 20 = $4
 			// fuera del periodo de agosto
-			this.calls.add(new Call(user1, user2, LocalDateTime.of(2021, Month.SEPTEMBER, 13, 22, 25, 55),
-					LocalDateTime.of(2021, Month.SEPTEMBER, 13, 22, 55, 55)));
+			this.calls.add(new Call(user1, user2, LocalDateTime.of(2021, Month.SEPTEMBER, 13, 22, 10, 55),
+					LocalDateTime.of(2021, Month.SEPTEMBER, 13, 22, 50, 55)));
 		} catch (Exception e) {
 			System.out.println(e);
 		}

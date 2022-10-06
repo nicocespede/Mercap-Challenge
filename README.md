@@ -68,9 +68,9 @@ DETALLE:
 Abono básico ---------- $ 500.0
 
 Llamadas locales (1):
-  • Llamada 'moreno' - 'moreno' (30.0 mins) ---------- $ 3
+  • Llamada 'moreno' - 'moreno' (40.0 mins) ---------- $ 4
 
-TOTAL A PAGAR ---------- $ 503.0
+TOTAL A PAGAR ---------- $ 504.0
 ```
 
 • **Factura del usuario con ID 2 del período 08/21** (`Bill bill = generateBill("2", 8, 2021);`):
