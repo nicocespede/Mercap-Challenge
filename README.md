@@ -114,4 +114,6 @@ TOTAL A PAGAR ---------- $ 500.0
 
 • En la clase `Call`, el tipo de llamada (local, nacional o internacional) podría haber sido una propiedad de la clase, pero se decidió que el mismo se pueda inferir a partir de las propiedades (país y localidad) de los usuarios que la misma contiene.
 
+• Se tiene consciencia de que a algunas clases pueden faltarle getters que serían útiles en un contexto más grande, pero como el problema en este caso es acotado, se permitió prescindir de ellos.
+
 • Si se desea probar los distintos ejemplos, "descomentar" la línea correspondiente al ejemplo deseado en la clase `Main`. Si se desea probar ejemplos nuevos, modificar a gusto los parámetros en el llamado a la función `generateBill()` de la línea 16 de la clase `Main`.
