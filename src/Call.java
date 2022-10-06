@@ -1,6 +1,7 @@
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 public class Call {
 	private User callerUser;
@@ -8,34 +9,51 @@ public class Call {
 	private LocalDateTime startDateTime;
 	private LocalDateTime endDateTime;
 
-	public Call(User caller, User receiver, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+	public Call(User caller, User receiver, LocalDateTime startDateTime, LocalDateTime endDateTime) throws Exception {
+		if (Objects.isNull(caller))
+			throw new NullPointerException("Error in new Call(): Caller User cannot be Null");
+		if (Objects.isNull(receiver))
+			throw new NullPointerException("Error in new Call(): Receiver User cannot be Null");
+
 		this.callerUser = caller;
 		this.receiverUser = receiver;
+
+		LocalDateTime today = LocalDateTime.now();
+
+		if (startDateTime.isAfter(today))
+			throw new IllegalArgumentException("Error in new Call(): startDateTime is invalid");
+
+		if (endDateTime.isAfter(today))
+			throw new IllegalArgumentException("Error in new Call(): endDateTime is invalid");
+
+		if (startDateTime.isAfter(endDateTime))
+			throw new IllegalArgumentException("Error in new Call(): startDateTime cannot be after endDateTime");
+
 		this.startDateTime = startDateTime;
 		this.endDateTime = endDateTime;
 	}
 
 	public User getCallerUser() {
-		return callerUser;
+		return this.callerUser;
 	}
 
 	public User getReceiverUser() {
-		return receiverUser;
+		return this.receiverUser;
 	}
 
 	public LocalDateTime getStartDateTime() {
-		return startDateTime;
+		return this.startDateTime;
 	}
 
 	public LocalDateTime getEndDateTime() {
-		return endDateTime;
+		return this.endDateTime;
 	}
 
 	public double getDurationMinutes() {
-		return startDateTime.until(endDateTime, ChronoUnit.MINUTES);
+		return this.startDateTime.until(endDateTime, ChronoUnit.MINUTES);
 	}
 
 	public DayOfWeek getDay() {
-		return startDateTime.getDayOfWeek();
+		return this.startDateTime.getDayOfWeek();
 	}
 }

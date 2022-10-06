@@ -1,21 +1,28 @@
+import java.text.DecimalFormat;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bill {
+	private LocalDate date;
 	private double basicCharge;
 	private User user;
 	private Month month;
+	private int year;
 	private ArrayList<Call> localCalls;
 	private ArrayList<Call> nationalCalls;
 	private ArrayList<Call> internationalCalls;
 	private Data data;
 
-	public Bill(User user, Month month, ArrayList<Call> calls) {
+	public Bill(User user, Month month, int year, ArrayList<Call> calls) {
+		this.date = LocalDate.now();
 		this.basicCharge = 500.0;
 		this.user = user;
 		this.month = month;
+		this.year = year;
 
 		// filtro llamadas locales
 		List<Call> localCalls = calls.stream()
@@ -38,6 +45,7 @@ public class Bill {
 		this.internationalCalls = new ArrayList<Call>(internationalCalls);
 
 		this.data = new Data();
+		this.data.fillCosts();
 	}
 
 	public User getUser() {
@@ -61,44 +69,51 @@ public class Bill {
 	}
 
 	public String toString() {
-		String nameString = "Nombre de cliente: '" + this.user.getName() + "'\n";
-		String monthString = "Mes: '" + this.month.toString() + "'\n\n";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		String dateString = "Fecha de facturación: " + formatter.format(this.date).toString() + "\n";
+		String idString = "Número de cliente: " + this.user.getId() + "\n";
+		String nameString = "Nombre de cliente: " + this.user.getName() + "\n";
+		String monthString = "Período: " + translateMonth(this.month) + "/" + this.year + "\n\n";
 		String detailTitle = "DETALLE:\n\n";
-		String basicPaymentString = "Abono básico: ---------- $ " + this.basicCharge + "\n\n";
-		double localCallsCharge = calculateLocalCallsTotalCharge();
-		double nationalCallsCharge = calculateNationalCallsTotalCharge();
-		double internationalCallsCharge = calculateInternationalCallsTotalCharge();
+		String basicPaymentString = "Abono básico ---------- $ " + this.basicCharge + "\n\n";
 		String localCallsString = getCallsDetails(this.localCalls, "locales");
 		String nationalCallsString = getCallsDetails(this.nationalCalls, "nacionales");
 		String internationalCallsString = getCallsDetails(this.internationalCalls, "internacionales");
-		String totalCharge = "COSTO TOTAL ---------- $ "
-				+ (this.basicCharge + localCallsCharge + nationalCallsCharge + internationalCallsCharge);
+		String totalCharge = "TOTAL A PAGAR ---------- $ " + (this.basicCharge + calculateLocalCallsTotalCharge()
+				+ calculateNationalCallsTotalCharge() + calculateInternationalCallsTotalCharge());
 
-		return nameString + monthString + detailTitle + basicPaymentString + localCallsString + nationalCallsString
-				+ internationalCallsString + totalCharge;
+		return dateString + idString + nameString + monthString + detailTitle + basicPaymentString + localCallsString
+				+ nationalCallsString + internationalCallsString + totalCharge;
 	}
 
 	private String getCallsDetails(ArrayList<Call> calls, String type) {
 		if (calls.size() == 0)
 			return "";
 		String ret = "Llamadas " + type + " (" + calls.size() + "):\n";
+		DecimalFormat df = new DecimalFormat("#.##");
 		for (Call c : calls) {
 			if (type == "locales") {
 				ret += "  • Llamada '" + c.getCallerUser().getResidingLocality() + "' - '"
 						+ c.getReceiverUser().getResidingLocality() + "' (" + c.getDurationMinutes()
-						+ " mins) ---------- $ " + calculateLocalCallCharge(c) + "\n";
+						+ " mins) ---------- $ " + df.format(calculateLocalCallCharge(c)) + "\n";
 			} else if (type == "nacionales") {
 				ret += "  • Llamada '" + c.getCallerUser().getResidingLocality() + "' - '"
 						+ c.getReceiverUser().getResidingLocality() + "' (" + c.getDurationMinutes()
-						+ " mins) ---------- $ " + calculateNationalCallCharge(c) + "\n";
+						+ " mins) ---------- $ " + df.format(calculateNationalCallCharge(c)) + "\n";
 			} else {
 				ret += "  • Llamada '" + c.getCallerUser().getResidingCountry() + "' - '"
 						+ c.getReceiverUser().getResidingCountry() + "' (" + c.getDurationMinutes()
-						+ " mins) ---------- $ " + calculateInternationalCallCharge(c) + "\n";
+						+ " mins) ---------- $ " + df.format(calculateInternationalCallCharge(c)) + "\n";
 			}
 		}
 		ret += "\n";
 		return ret;
+	}
+
+	private String translateMonth(Month month) {
+		String[] months = { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",
+				"Octubre", "Noviembre", "Diciembre" };
+		return months[month.getValue() - 1];
 	}
 
 	private double calculateLocalCallCharge(Call call) {
