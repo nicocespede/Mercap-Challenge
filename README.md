@@ -22,7 +22,7 @@ Este método busca si el usuario existe en la lista de usuarios (que simula una 
 
 Finalmente, utiliza el objeto `User` encontrado, el mes, el año y la lista filtrada de llamadas, para crear y retornar un nuevo objeto `Bill` que representa la factura del período pedido correspondiente al usuario pedido, la cual será impresa en consola utilizando su método `toString()`.
 
-## **Ejemplos de facturas:
+## **Ejemplos de facturas:**
 
 • **Factura del usuario con ID 1 del período 08/21** (`Bill bill = generateBill("1", 8, 2021);`):
 
@@ -71,7 +71,6 @@ Llamadas locales (1):
   • Llamada 'moreno' - 'moreno' (30.0 mins) ---------- $ 3
 
 TOTAL A PAGAR ---------- $ 503.0
-
 ```
 
 • **Factura del usuario con ID 2 del período 08/21** (`Bill bill = generateBill("2", 8, 2021);`):
@@ -97,20 +96,20 @@ TOTAL A PAGAR ---------- $ 500.0
 
 • Se asume que la llamada se le cobra sólo al usuario que la realiza, y no al que la recibe.
 
-• Se asume que el enunciado con "0,10 centavos" se refiere a 0,10 pesos, es decir, 10 centavos; y lo mismo con "0,20 centavos".
+• Se asume que el enunciado con "0,10 centavos" se refiere a "0,10 pesos", es decir, "10 centavos"; y lo mismo con "0,20 centavos".
 
 • Se asume que el abono básico es el mismo para todos los clientes, el cuál se optó por que sea de $500.
 
-• Se asume que el costo de llamada a una determinada localidad y a un determinado país son fijos, es decir, que no depende de la localidad o el país desde el que provenga la llamada. Por ejemplo, si una llamada proviene de Argentina con destino Brasil, se cobrará (por minuto) lo mismo que una llamada proveniente de Bolivia con destino Brasil. Lo mismo aplica para las localidades.
+• Se asume que el costo de llamada a una determinada localidad y a un determinado país son fijos, es decir, que no depende de la localidad o el país desde el que provenga la llamada. Por ejemplo, si una llamada proviene de Argentina con destino Brasil, se cobrará (por minuto) lo mismo que una llamada proveniente de Bolivia con destino Brasil. La misma lógica aplica para las localidades.
 
-• Se optó por que las propiedades de la clase `Data` sean públicas por una cuestión de poder acceder fácilmente a ellas (sin un getter).
+• Se optó por que las propiedades de la clase `Data` sean públicas por una cuestión de poder acceder fácilmente a ellas (sin utilizar un getter).
 
 • El constructor de la clase `Bill` realiza un trabajo de filtrado de las llamadas antes de asignarle valores a ciertas propiedades. Se desconoce si esto es una buena práctica o no, pero al no ser considerada una operación crítica para la construcción del objeto, se decidió mantenerlo así.
-
-• En la clase `Call`, el tipo de llamada (local, nacional o internacional) podría haber sido una propiedad de la clase, pero se decidió que el mismo se pueda inferir a partir de las propiedades de los usuarios que la misma contiene.
 
 • Inicialmente los países tenían localidades con diferentes costos de llamada, pero para no complejizar el problema (y porque el enunciado no lo especificaba) se decidió quitarlas.
 
 • Inicialmente los países y localidades de origen y destino de una llamada eran propiedades en la clase `Call`, pero se optó porque cada `User` tenga registrado su país y localidad en sus propiedades.
 
-• Si se desea probar los distintos ejemplos, "descomentar" la línea correspondiente en la clase `Main`. Si se desea probar ejemplos nuevos, modificar a gusto los parámetros en el llamado a la función `generateBill()` de la línea 16 de la clase `Main`.
+• En la clase `Call`, el tipo de llamada (local, nacional o internacional) podría haber sido una propiedad de la clase, pero se decidió que el mismo se pueda inferir a partir de las propiedades (país y localidad) de los usuarios que la misma contiene.
+
+• Si se desea probar los distintos ejemplos, "descomentar" la línea correspondiente al ejemplo deseado en la clase `Main`. Si se desea probar ejemplos nuevos, modificar a gusto los parámetros en el llamado a la función `generateBill()` de la línea 16 de la clase `Main`.
