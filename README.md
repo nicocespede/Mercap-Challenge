@@ -102,6 +102,8 @@ TOTAL A PAGAR ---------- $ 500.0
 
 • Se asume que el costo de llamada a una determinada localidad y a un determinado país son fijos, es decir, que no depende de la localidad o el país desde el que provenga la llamada. Por ejemplo, si una llamada proviene de Argentina con destino Brasil, se cobrará (por minuto) lo mismo que una llamada proveniente de Bolivia con destino Brasil. La misma lógica aplica para las localidades.
 
+• Se asume que cada período de facturación comprende desde el primer día del mes hasta el último, ya que se considera que conformar los períodos con inicio y fin en una fecha diferente sería complejizar el problema innecesariamente.
+
 • Se optó por que las propiedades de la clase `Data` sean públicas por una cuestión de poder acceder fácilmente a ellas (sin utilizar un getter).
 
 • El constructor de la clase `Bill` realiza un trabajo de filtrado de las llamadas antes de asignarle valores a ciertas propiedades. Se desconoce si esto es una buena práctica o no, pero al no ser considerada una operación crítica para la construcción del objeto, se decidió mantenerlo así.
