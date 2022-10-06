@@ -1,4 +1,4 @@
-# **Mercap-Challenge**
+# **Mercap Challenge**
 
 El ejercicio se realizó en Java, utilizando Eclipse IDE.
 
